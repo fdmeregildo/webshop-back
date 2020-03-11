@@ -1,0 +1,10 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: insert.master.data.product
+      author: user
+      changes:
+
+        - sqlFile:
+            path: ../sql/20200220.productinitialdata.sql
+            relativeToChangelogFile: true

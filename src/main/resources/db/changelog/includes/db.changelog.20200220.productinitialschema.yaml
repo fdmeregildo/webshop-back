@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: createTable-PRODUCT
+      author: user
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: ID
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: COD_PRODUCTO
+                  type: VARCHAR(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NAME
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PRICE
+                  type: DECIMAL
+                  constraints:
+                    default: 0
+                    nullable: false
+              - column:
+                  name: USER_MOD
+                  type: VARCHAR(10)
+                  defaultValue: "USER_TEST"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DATE_MOD
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                   nullable: false
+            tableName: PRODUCT
