@@ -29,41 +29,74 @@ public class ShopCartGuestServiceImpl implements ShopCartGuestService {
 	/**
 	 * If product exist so it'll add quantity and calculate new price item
 	 */
+
 	@Override
-	public CartItemDto getCartItemData(CartItemDto item) {
+	public CartDto addItem(CartDto cart, Integer idProduct, int quantity) {
 
-		ProductDto product = productoService.getProductById(item.getProduct().getId());
+		boolean exist = false;
 
-		if (product == null) {
-			throw new NotFoundException("Not Found Product with Id " + item.getProduct().getId());
+		for (CartItemDto item: cart.getItemDtoList()) {
+			if(item.getProduct().getId().equals(idProduct)){
+				exist = true;
+
+				item.setQuantity(item.getQuantity() + quantity);
+				item.setPriceTotal(item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+				break;
+			}
 		}
 
-		item.setProduct(product);
-		item.setQuantity(item.getQuantity() + quantity);
-		item.setPriceTotal(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
+		if(!exist){
+			CartItemDto addItem = new CartItemDto();
 
-		return item;
-	}
+			ProductDto product = productoService.getProductById(idProduct);
+			addItem.setProduct(product);
+			addItem.setQuantity(quantity);
+			addItem.setPriceTotal(product.getPrice().multiply(BigDecimal.valueOf(quantity)));
 
-	@Override
-	public CartDto getCartData(CartDto cart) {
+			cart.getItemDtoList().add(addItem);
+		}
 
-		//Assign temporal data
-		cart.setCustomerDto(customerService.getGuestCustomer());
-		cart.setSubTotal(calculateSubTotalItems(cart.getItemDtoList()));
-		cart.setTotal(cart.getSubTotal().multiply(IVA_SPAIN));
+		recalculateCart(cart);
 
 		return cart;
 	}
 
-	private BigDecimal calculateSubTotalItems(List<CartItemDto> items) {
+
+
+	@Override
+	public CartDto deleteItem(CartDto cart, Integer idProduct) {
+
+		boolean exist = false;
+
+		for (CartItemDto item : cart.getItemDtoList()) {
+			if (item.getProduct().getId().equals(idProduct)) {
+				exist = true;
+				cart.getItemDtoList().remove(item);
+				break;
+			}
+		}
+
+		if (!exist) {
+			throw new NotFoundException("Item Not Found with idProduct " + idProduct);
+		}
+
+		recalculateCart(cart);
+
+		return cart;
+	}
+
+
+
+	private void recalculateCart(CartDto cart) {
 
 		BigDecimal subtotal = BigDecimal.ZERO;
-		for (CartItemDto item : items) {
+		for (CartItemDto item : cart.getItemDtoList()) {
 			subtotal = subtotal.add(item.getPriceTotal());
 		}
 
-		return subtotal;
+		cart.setCustomerDto(customerService.getGuestCustomer());
+		cart.setSubTotal(subtotal);
+		cart.setTotal(cart.getSubTotal().add((cart.getSubTotal().multiply(IVA_SPAIN))));
 	}
 
 }

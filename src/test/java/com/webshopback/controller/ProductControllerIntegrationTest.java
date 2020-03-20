@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 public class ProductControllerIntegrationTest {
 
-	public static BigInteger ID_PRODUCT_EXIST = BigInteger.ONE;
+	public static Integer ID_PRODUCT_EXIST = 1;
 
 
 	@Test

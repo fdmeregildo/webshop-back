@@ -10,8 +10,8 @@ import com.webshopback.model.dto.CartItemDto;
 
 public interface ShopCartGuestService {
 
-	public CartItemDto getCartItemData(CartItemDto item);
+	public CartDto addItem(CartDto cart, Integer idProduct, int quantity);
 
-	public CartDto getCartData(CartDto cart);
+	public CartDto deleteItem(CartDto cart, Integer idProduct);
 
 }

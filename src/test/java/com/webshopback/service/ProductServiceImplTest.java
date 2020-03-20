@@ -25,8 +25,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class ProductServiceImplTest {
 
-	private static final BigInteger CODE_PRODUCT_EXIST = BigInteger.ONE;
-	private static final BigInteger CODE_PRODUCT_NO_EXIST = BigInteger.valueOf(1000);
+	private static final Integer CODE_PRODUCT_EXIST = 1;
+	private static final Integer CODE_PRODUCT_NO_EXIST = 1000;
 
 	@TestConfiguration
 	static class ContextConfiguration {
@@ -65,10 +65,10 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	public void suggestionsHotelConverterToDto() {
+	public void productEntityConverterToDto() {
 
 		ProductEntity entity = new ProductEntity();
-		entity.setId(BigInteger.ONE);
+		entity.setId(1);
 		entity.setName("Producto Testing");
 
 		ProductEntityToDtoConvert converter = new ProductEntityToDtoConvert();
@@ -81,7 +81,7 @@ public class ProductServiceImplTest {
 	public void mockGPKRepositoryBehavior() {
 
 		ProductEntity entity = new ProductEntity();
-		entity.setId(BigInteger.ONE);
+		entity.setId(1);
 		entity.setName("Product 01 Test");
 
 		Mockito.doReturn(Optional.of(entity)).when(productRepository).findById(CODE_PRODUCT_EXIST);

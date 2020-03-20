@@ -5,39 +5,58 @@ import com.webshopback.model.dto.ProductDto;
 import com.webshopback.model.entity.ProductEntity;
 import com.webshopback.repository.ProductRepository;
 import com.webshopback.service.converters.ProductEntityToDtoConvert;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Optional;
-import org.apache.commons.lang3.RandomUtils;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by fmeregildo.
  */
- @Service
-public class ProductServiceImpl implements  ProductService{
+@Service
+public class ProductServiceImpl implements ProductService {
 
 
- 	@Autowired
+	@Autowired
 	private ProductRepository productRepository;
 
 
 	/**
 	 * Get Information about Product by Id
-	 * @param id
-	 * @return
 	 */
-	public ProductDto getProductById(Integer id){
+	@Override
+	public ProductDto getProductById(Integer idProduct) {
 
 		ProductDto productDto = null;
 
-		ProductEntity productEntity = productRepository.findById(id)
-			.orElseThrow(() -> new NotFoundException("getGlobalParamComboById with id " + id));
+		ProductEntity productEntity = productRepository.findById(idProduct)
+			.orElseThrow(() -> new NotFoundException("getGlobalParamComboById with id " + idProduct));
+
+		if (productEntity == null) {
+			throw new NotFoundException("Not Found Product with Id " + idProduct);
+		}
 
 		ProductEntityToDtoConvert convert = new ProductEntityToDtoConvert();
 		productDto = convert.convertToDto(productEntity);
 
 		return productDto;
 	}
+
+	@Override
+	public List<ProductDto> getProducts() {
+
+		List<ProductDto> productDtoList = new ArrayList<>();
+		List<ProductEntity> productEntityList = productRepository.findAll();
+
+		if (productEntityList != null && !productEntityList.isEmpty()) {
+			ProductEntityToDtoConvert toDtoConvert = new ProductEntityToDtoConvert();
+			productEntityList.stream().forEach(i -> productDtoList.add(toDtoConvert.convertToDto(i)));
+		}else {
+			throw new NotFoundException("Products Not Found");
+		}
+
+		return productDtoList;
+	}
+
+
 }

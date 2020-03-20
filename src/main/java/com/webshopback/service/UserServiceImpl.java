@@ -1,9 +1,6 @@
 package com.webshopback.service;
 
-import com.fasterxml.jackson.databind.node.BigIntegerNode;
 import com.webshopback.model.dto.UserDto;
-import java.math.BigInteger;
-import liquibase.database.core.Ingres9Database;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,14 +8,15 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class UserServiceImpl implements  UserService {
+public class UserServiceImpl implements UserService {
 
 	//DATA TEMP
-	private final static BigInteger USER_ID = BigInteger.valueOf(123123);
+	private final static Integer USER_ID = 123123;
 
 	private final static String USER_EMAIL = "userregistered@gmaillcom";
+
 	@Override
-	public UserDto getUserByUsername(String username){
+	public UserDto getUserByUsername(String username) {
 
 		/**
 		 * TODO

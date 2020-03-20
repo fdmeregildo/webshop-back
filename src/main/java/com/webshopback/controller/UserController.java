@@ -32,8 +32,13 @@ public class UserController {
 	static final String MAPPING_GET_BY_USERNAME = "/{username}";
 	static final String MAPPING_POST_USER_GUEST = "/guest";
 
-	@Autowired
+
 	private UserService userService;
+
+	@Autowired
+	public UserController(UserService userService){
+		this.userService = userService;
+	}
 
 	@GetMapping(MAPPING_GET_BY_USERNAME)
 	@ApiOperation(value = "Get cart item for to add product", notes = "Get cart item for to add product from details product")

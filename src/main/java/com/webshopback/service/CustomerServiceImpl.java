@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+	@Override
 	public CustomerDto getCustomerByUsername(String username){
 
 		/**
@@ -23,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customer;
 	}
 
-
+	@Override
 	public CustomerDto getGuestCustomer(){
 
 		/**

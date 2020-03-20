@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,71 +33,66 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopCartController {
 
 	final static String BASE_MAPPING = "/api/cart";
-	final static String CART_MAPPING_RESOURCE = "/item";
+	final static String CART_MAPPING_CURRENT = "/current";
+	final static String CART_MAPPING_ITEM = "/item";
+
+	private ShopCartGuestService shopCartGuestService;
 
 	@Autowired
-	private ShopCartGuestService shopCartGuestService;
+	public ShopCartController(ShopCartGuestService shopCartGuestService){
+		this.shopCartGuestService = shopCartGuestService;
+	}
+
 
 	@GetMapping
 	@ApiOperation(value = "Get information Cart", notes = "Get information cart from general cart button")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
 		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
 		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
-	public ResponseEntity<CartDto> getCart(
-		@ApiParam(value = "Cart Data", required = true) @Valid @RequestBody(required = true) CartDto cartDto) {
+	public ResponseEntity<CartDto> getCart(HttpServletRequest req) {
 
-		CartDto cartDtoResponse = new CartDto();
-		List<CartItemDto> itemsDtoListReponse = new ArrayList<>();
+		HttpSession session = req.getSession(true);
+		CartDto cart = (CartDto) session.getAttribute("cart");
 
-		for (CartItemDto item : cartDto.getItemDtoList()) {
-			itemsDtoListReponse.add(shopCartGuestService.getCartItemData(item));
-		}
-
-		cartDtoResponse.setItemDtoList(itemsDtoListReponse);
-		cartDtoResponse = shopCartGuestService.getCartData(cartDto);
-
-		return ResponseEntity.ok(cartDtoResponse);
+		return ResponseEntity.ok(cart);
 	}
 
 
-
-	@PostMapping(CART_MAPPING_RESOURCE)
+	@PostMapping(CART_MAPPING_ITEM)
 	@ApiOperation(value = "Post cart item", notes = "Post cart item for to add product")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
 		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
 		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
-	public ResponseEntity<CartItemDto> addItem(
-		@ApiParam(value = "Id Product", required = true) @RequestParam(required = true) Integer idProduct) {
+	public ResponseEntity<CartDto> addItem(
+		@ApiParam(value = "Id Product", required = true) @RequestParam(value = "idProduct", required = true) Integer idProduct,
+		@ApiParam(value = "Quantity", required = true) @RequestParam(value = "quantity", required = true) Integer quantity,
+		HttpServletRequest req) {
 
-		CartItemDto itemsDtoReponse = shopCartGuestService.getCartItemData(cartItemDto);
+		HttpSession session = req.getSession(true);
+		CartDto cart = (CartDto) session.getAttribute("cart");
 
-		return ResponseEntity.ok(itemsDtoReponse);
-	}
+		cart = shopCartGuestService.addItem(cart, idProduct, quantity);
+		session.setAttribute("cart", cart);
 
-	@PutMapping(CART_MAPPING_RESOURCE)
-	@ApiOperation(value = "Put cart item", notes = "Put cart item for to update product")
-	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
-		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
-		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
-	public ResponseEntity<CartItemDto> updateItem(
-		@ApiParam(value = "Cart Item Data", required = true) @RequestBody(required = true) CartItemDto cartItemDto) {
-
-		CartItemDto itemsDtoReponse = shopCartGuestService.getCartItemData(cartItemDto);
-
-		return ResponseEntity.ok(itemsDtoReponse);
+		return ResponseEntity.ok(cart);
 	}
 
 
-	@DeleteMapping(CART_MAPPING_RESOURCE)
+	@DeleteMapping(CART_MAPPING_ITEM)
 	@ApiOperation(value = "Delete cart item", notes = "Delete cart item for to delete product")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
 		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
 		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
-	public ResponseEntity<CartItemDto> deleteItem(
-		@ApiParam(value = "Cart Item Data", required = true) @RequestBody(required = true) CartItemDto cartItemDto) {
+	public ResponseEntity<CartDto> deleteItem(
+		@ApiParam(value = "Id Product", required = true) @RequestParam(value = "idProduct", required = true) Integer idProduct,
+		HttpServletRequest req) {
 
-		CartItemDto itemsDtoReponse = shopCartGuestService.getCartItemData(cartItemDto);
+		HttpSession session = req.getSession(true);
+		CartDto cart = (CartDto) session.getAttribute("cart");
 
-		return ResponseEntity.ok(itemsDtoReponse);
+		cart = shopCartGuestService.deleteItem(cart, idProduct);
+
+		return ResponseEntity.ok(cart);
 	}
+
 }

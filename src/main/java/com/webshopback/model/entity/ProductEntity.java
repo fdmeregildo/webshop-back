@@ -2,7 +2,7 @@ package com.webshopback.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +26,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity implements Serializable{
+public class ProductEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,6 @@ public class ProductEntity implements Serializable{
 	private String userMod;
 
 	@Column(name = "DATE_MOD", nullable = false)
-	private BigDecimal lastMod;
+	private Date lastMod;
 
 }
