@@ -3,6 +3,7 @@ package com.webshopback.model.dto;
 import com.fasterxml.jackson.databind.node.BigIntegerNode;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,10 +13,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerDto implements Serializable {
+public class CustomerDto  extends  UserDto implements Serializable {
 
-	private BigInteger id;
-	private String username;
-	private String email;
+	private List<AddressDto> addressDtoList;
+
+	/**
+	 * To Complete with others attributes
+	 */
+
 
 }

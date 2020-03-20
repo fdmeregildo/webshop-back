@@ -14,7 +14,7 @@ import lombok.Setter;
 public class CartItemDto implements Serializable {
 
 	private ProductDto product;
-	private Integer quantity;
+	private int quantity;
 	private BigDecimal priceTotal;
 
 

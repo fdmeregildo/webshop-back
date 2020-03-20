@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ProductDto implements Serializable{
 
 
-	private BigInteger idProduct;
+	private Integer id;
 	private String name;
 	private String description;
 	private BigDecimal price;

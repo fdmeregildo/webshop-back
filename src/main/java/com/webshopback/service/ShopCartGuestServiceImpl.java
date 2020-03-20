@@ -32,15 +32,14 @@ public class ShopCartGuestServiceImpl implements ShopCartGuestService {
 	@Override
 	public CartItemDto getCartItemData(CartItemDto item) {
 
-		ProductDto product = productoService.getProductById(item.getProduct().getIdProduct());
+		ProductDto product = productoService.getProductById(item.getProduct().getId());
 
 		if (product == null) {
-			throw new NotFoundException("Not Found Product with Id " + item.getProduct().getIdProduct());
+			throw new NotFoundException("Not Found Product with Id " + item.getProduct().getId());
 		}
 
 		item.setProduct(product);
-		item.setQuantity(
-			(item.getQuantity() != null) ? item.getQuantity() + BigInteger.ONE.intValue() : BigInteger.ONE.intValue());
+		item.setQuantity(item.getQuantity() + quantity);
 		item.setPriceTotal(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
 
 		return item;

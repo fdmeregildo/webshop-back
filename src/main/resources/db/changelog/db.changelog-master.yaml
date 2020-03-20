@@ -3,9 +3,9 @@ databaseChangeLog:
   # Changelog Example: https://raw.githubusercontent.com/liquibase/liquibase/master/liquibase-integration-tests/src/test/resources/changelogs/yaml/common.tests.changelog.yaml
 
   - include:
-      file: includes/db.changelog.20200220.productinitialschema.yaml
+      file: includes/db.changelog.productinitialschema.yaml
       relativeToChangelogFile: true
 
   - include:
-      file: includes/db.changelog.20200220.productinitialdata.yaml
+      file: includes/db.changelog.productinitialdata.yaml
       relativeToChangelogFile: true

@@ -13,7 +13,10 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +37,7 @@ public class ShopCartController {
 	private ShopCartGuestService shopCartGuestService;
 
 	@GetMapping
-	@ApiOperation(value = "Get information Cart", notes = "Get information Cart from Cart Button")
+	@ApiOperation(value = "Get information Cart", notes = "Get information cart from general cart button")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
 		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
 		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
@@ -55,12 +58,26 @@ public class ShopCartController {
 	}
 
 
-	@GetMapping(CART_MAPPING_RESOURCE)
-	@ApiOperation(value = "Get cart item for to add product", notes = "Get cart item for to add product from details product")
+
+	@PostMapping(CART_MAPPING_RESOURCE)
+	@ApiOperation(value = "Post cart item", notes = "Post cart item for to add product")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
 		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
 		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
-	public ResponseEntity<CartItemDto> getCartItem(
+	public ResponseEntity<CartItemDto> addItem(
+		@ApiParam(value = "Id Product", required = true) @RequestParam(required = true) Integer idProduct) {
+
+		CartItemDto itemsDtoReponse = shopCartGuestService.getCartItemData(cartItemDto);
+
+		return ResponseEntity.ok(itemsDtoReponse);
+	}
+
+	@PutMapping(CART_MAPPING_RESOURCE)
+	@ApiOperation(value = "Put cart item", notes = "Put cart item for to update product")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
+		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
+		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
+	public ResponseEntity<CartItemDto> updateItem(
 		@ApiParam(value = "Cart Item Data", required = true) @RequestBody(required = true) CartItemDto cartItemDto) {
 
 		CartItemDto itemsDtoReponse = shopCartGuestService.getCartItemData(cartItemDto);
@@ -69,4 +86,16 @@ public class ShopCartController {
 	}
 
 
+	@DeleteMapping(CART_MAPPING_RESOURCE)
+	@ApiOperation(value = "Delete cart item", notes = "Delete cart item for to delete product")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = SwaggerConfig.OK_MESSAGE),
+		@ApiResponse(code = 400, message = SwaggerConfig.BAD_REQUEST_MESSAGE),
+		@ApiResponse(code = 500, message = SwaggerConfig.INTERNAL_SERVER_ERROR_MESSAGE)})
+	public ResponseEntity<CartItemDto> deleteItem(
+		@ApiParam(value = "Cart Item Data", required = true) @RequestBody(required = true) CartItemDto cartItemDto) {
+
+		CartItemDto itemsDtoReponse = shopCartGuestService.getCartItemData(cartItemDto);
+
+		return ResponseEntity.ok(itemsDtoReponse);
+	}
 }

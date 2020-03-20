@@ -1,12 +1,12 @@
 package com.webshopback;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest
 class WebshopBackApplicationTests {
 
-	//@Test
+	@Test
 	void contextLoads() {
 	}
 

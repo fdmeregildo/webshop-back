@@ -8,5 +8,5 @@ import java.math.BigInteger;
  */
 public interface ProductService {
 
-	public ProductDto getProductById(BigInteger id);
+	public ProductDto getProductById(Integer id);
 }
