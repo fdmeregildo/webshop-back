@@ -1,4 +1,4 @@
-package com.webshopback.config;
+package com.webshopback.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
