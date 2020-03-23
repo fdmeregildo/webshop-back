@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
 	//DATA TEMP
 	private final static Integer USER_ID = 123123;
 
-	private final static String USER_EMAIL = "userregistered@gmaillcom";
+	private final static String USER_EMAIL = "userregistered@gmail.com";
 
 	@Override
 	public UserDto getUserByUsername(String username) {

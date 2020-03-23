@@ -33,10 +33,13 @@ public class ProductEntity implements Serializable {
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
-	@Column(name = "COD_PRODUCTO", nullable = false)
-	private String name;
+	@Column(name = "CODE", nullable = false)
+	private String code;
 
 	@Column(name = "NAME", nullable = false)
+	private String name;
+
+	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
 
 	@Column(name = "PRICE", nullable = false)

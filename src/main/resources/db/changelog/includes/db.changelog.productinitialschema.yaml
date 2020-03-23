@@ -13,12 +13,17 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: COD_PRODUCTO
+                  name: CODE
                   type: VARCHAR(6)
                   constraints:
                     nullable: false
               - column:
                   name: NAME
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DESCRIPTION
                   type: VARCHAR(255)
                   constraints:
                     nullable: false

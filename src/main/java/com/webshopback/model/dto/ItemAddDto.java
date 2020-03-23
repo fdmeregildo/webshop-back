@@ -1,8 +1,6 @@
 package com.webshopback.model.dto;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,22 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Created by fmeregildo.
+ * Created by fmeregildo on 22/03/2020.
  */
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartDto implements Serializable {
+public class ItemAddDto implements Serializable{
 
-	private Integer id;
 
 	@NotNull
-	private List<ItemDto> itemDtoList;
+	private Integer idProduct;
 
-	private BigDecimal subTotal;
-	private BigDecimal total;
-
+	@NotNull
+	private Integer quantity;
 
 }

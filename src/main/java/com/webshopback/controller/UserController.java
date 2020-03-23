@@ -28,7 +28,7 @@ public class UserController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-	static final String BASE_MAPPING = "/user";
+	static final String BASE_MAPPING = "api/user";
 	static final String MAPPING_GET_BY_USERNAME = "/{username}";
 	static final String MAPPING_POST_USER_GUEST = "/guest";
 

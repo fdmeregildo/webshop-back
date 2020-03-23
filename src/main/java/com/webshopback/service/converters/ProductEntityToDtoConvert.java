@@ -12,8 +12,9 @@ public class ProductEntityToDtoConvert {
 
 		ProductDto dto = new ProductDto();
 		dto.setId(productEntity.getId());
-		dto.setDescription(productEntity.getDescription());
+		dto.setCode(productEntity.getCode());
 		dto.setName(productEntity.getName());
+		dto.setDescription(productEntity.getDescription());
 		dto.setPrice(productEntity.getPrice());
 
 		return dto;

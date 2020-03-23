@@ -12,6 +12,7 @@ public class ProductDtoToEntityConvert {
 
 		ProductEntity productEntity = new ProductEntity();
 		productEntity.setId(productDto.getId());
+		productEntity.setName(productDto.getName());
 		productEntity.setDescription(productDto.getDescription());
 		productEntity.setName(productDto.getName());
 		productEntity.setPrice(productDto.getPrice());
