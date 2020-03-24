@@ -7,7 +7,7 @@ import com.webshopback.model.dto.CartDto;
  */
 
 
-public interface ShopCartGuestService {
+public interface ShopCartService {
 
 	public CartDto addItem(CartDto cart, Integer idProduct, int quantity);
 

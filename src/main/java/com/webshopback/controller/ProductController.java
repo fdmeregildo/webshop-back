@@ -1,6 +1,6 @@
 package com.webshopback.controller;
 
-import com.webshopback.config.SwaggerConfig;
+import com.webshopback.config.swagger.SwaggerConfig;
 import com.webshopback.model.dto.ProductDto;
 import com.webshopback.service.ProductService;
 import io.swagger.annotations.ApiOperation;

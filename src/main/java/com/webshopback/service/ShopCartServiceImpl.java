@@ -14,13 +14,11 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ShopCartGuestServiceImpl implements ShopCartGuestService {
+public class ShopCartServiceImpl implements ShopCartService {
 
 	@Autowired
 	private ProductService productoService;
 
-	@Autowired
-	private CustomerService customerService;
 
 	//Temporal Static
 	private final static BigDecimal IVA_SPAIN = new BigDecimal("0.16");

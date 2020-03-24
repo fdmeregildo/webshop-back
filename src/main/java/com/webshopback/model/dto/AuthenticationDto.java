@@ -1,6 +1,7 @@
 package com.webshopback.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressDto implements Serializable {
+public class AuthenticationDto implements Serializable {
 
-	private String address;
-	private String postalcode;
+	private String username;
+	private String password;
+	private List<String> roles;
 
 }
